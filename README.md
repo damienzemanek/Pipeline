@@ -20,7 +20,7 @@ Internal middleware pipeline system with: fluent-api step composition, immutable
 
 
 
-## Example Usage
+## 🎮 Example Usage
 
 ### Example 1 — Smallest possible pipeline (just do one thing)
 ```csharp
@@ -175,6 +175,6 @@ await PipelineExecutor<FireCtx>.TryTo(firePipeline, new FireCtx
 
 
 
-## 🔀 Flowchart
+# 📌 Flowchart
 
 ![Pipeline Flowchart](https://github.com/user-attachments/assets/8a156396-2fd6-4606-99e0-f6d5b3301870)
