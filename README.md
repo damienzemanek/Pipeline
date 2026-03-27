@@ -45,7 +45,7 @@ await PipelineExecutor<MoveCtx>.TryTo(movePipeline, new MoveCtx { Speed = 5f });
 
 
 ### 📌 Example 2 — Add middleware functionality with `Add_Middleware`
-Compose pipelines with extra functionality separating from eachother, (ex: animation, vfx, preparation)
+Compose pipelines with extra functionality seperate from eachother, (ex: animation, vfx, preparation)
 
 ```csharp
 using EMILtools.Systems;
