@@ -1,5 +1,5 @@
 # Pipeline
-Internal middleware pipeline system with: fluent-api step composition, immutable context delivery, async execution optionality, explicit before/short-circuit/after resolving designed to keep gameplay logic modular, testible, and easy to evolve
+Internal middleware pipeline system with: fluent-api step composition, immutable context delivery, async execution optionality, explicit before/short-circuit/after resolving designed to keep gameplay logic modular, testable, and easy to evolve
 
 ## 💻 Technologies Used
 
@@ -44,7 +44,7 @@ await PipelineExecutor<MoveCtx>.TryTo(movePipeline, new MoveCtx { Speed = 5f });
 
 
 ### 📌 Example 2 — Add middleware functionality with `Add_Middleware`
-Compose pipelines with extra functionality seperate from eachother, (ex: animation, vfx, preparation)
+Compose pipelines with extra functionality separate from eachother, (ex: animation, vfx, preparation)
 
 ```csharp
 using EMILtools.Systems;
@@ -177,7 +177,7 @@ await PipelineExecutor<FireCtx>.TryTo(firePipeline, new FireCtx
 
 ## 📐 My Development Process
 
-1. I was iterating on another system of mine and wanted to find a way to seperate out the transient state context from the actual blackboard I was using. So I started brainstorming using Figma
+1. I was iterating on another system of mine and wanted to find a way to separate out the transient state context from the actual blackboard I was using. So I started brainstorming using Figma
 2. I came up with an initial design alongside developing an initial integration flowchart of how it would fit in my other system
 3. I initially thought that using value-types would be a viable solution, however I quickly transitioned to reference-types when I realized how often the system sends the context around.
 If it were a value-type it would be copied by value many many times. In turn, I realized a design constraint I needed to keep in mind, that being: High throughput
@@ -193,9 +193,9 @@ You can take a look at my Diagram iterations [here](https://drive.google.com/dri
 ## 💡 What I learned
 
 ### 🔧 Context Immutability Design
-- There are different levels to immutability in different programming layers, to make data immutable, and the one I chose for this project was to make the Context be immutable at the class level
-This means instead of using { get; private set; } which still allows class references to be mutated because the private set only affects the the immutability at the replacement level, implementing
-an interface with only { get; } and seperating out any class references from the context class itself results in complete separation. So what it looks like is this:
+- There are different levels to immutability in different programming layers to make data immutable. The one I chose for this project was to make the Context be immutable at the class level.
+This means instead of using { get; private set; } which still allows class references to be mutated because the private set only affects the the immutability at the replacement level, I would implement
+an interface with { get; } only and separate out any class references from the concrete context class itself. So what it looks like is this:
 ```csharp
 
 public interface ISomeContextView
