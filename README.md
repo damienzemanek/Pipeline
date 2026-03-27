@@ -6,6 +6,8 @@ Internal middleware pipeline system with: fluent-api step composition, immutable
 1. C#
 2. Unity3D
 
+
+
 ## 💎 Features
 
 1. Construct middleware pipelines via fluent-api builder
@@ -15,6 +17,8 @@ Internal middleware pipeline system with: fluent-api step composition, immutable
 5. Resolver integration for each and every step: before, after, and during a potential short-circuit
 6. Resolver avaliable functionality increasing modularity and extensibility
 7. Async specific resolve options during pipeline execution (Waiting, TimedGates)
+
+
 
 ## Example Usage
 
@@ -36,6 +40,7 @@ var movePipeline = new PipelineBuilder<MoveCtx>()
 
 await PipelineExecutor<MoveCtx>.TryTo(movePipeline, new MoveCtx { Speed = 5f });
 ```
+
 
 ### Example 2 — Add middleware functionality with `Add_Middleware`
 
@@ -61,6 +66,7 @@ var sprintPipeline = new PipelineBuilder<StaminaCtx>()
 await PipelineExecutor<StaminaCtx>.TryTo(sprintPipeline, new StaminaCtx { Stamina = 20 });
 ```
 
+
 ### Example 3 — Add validation with `Add_ShortCircuit`
 If a short-circuit condition fails, the main method won’t run.
 
@@ -83,6 +89,7 @@ var attackPipeline = new PipelineBuilder<AttackCtx>()
 await PipelineExecutor<AttackCtx>.TryTo(attackPipeline, new AttackCtx { HasWeapon = true });  // runs
 await PipelineExecutor<AttackCtx>.TryTo(attackPipeline, new AttackCtx { HasWeapon = false }); // blocked
 ```
+
 
 ### Example 4 — Add `before`, `after`, and `shortCircuited` hooks
 This is great for logging, VFX/SFX, analytics, or UI feedback.
@@ -120,7 +127,8 @@ await PipelineExecutor<CastCtx>.TryTo(castPipeline, new CastCtx { Mana = 15 }); 
 await PipelineExecutor<CastCtx>.TryTo(castPipeline, new CastCtx { Mana = 3 });  // before -> shortCircuited
 ```
 
-### Example 4 — Multi-step gameplay flow (realistic)
+
+### Example 5 — Multi-step gameplay flow (realistic)
 This combines multiple guards and a middleware with the final main execution.
 
 ```csharp
@@ -164,6 +172,8 @@ await PipelineExecutor<FireCtx>.TryTo(firePipeline, new FireCtx
     Recoil = 0
 });
 ```
+
+
 
 ## 🔀 Flowchart
 
