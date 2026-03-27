@@ -192,7 +192,7 @@ You can take a look at my Diagram iterations [here](https://drive.google.com/dri
 
 ## 💡 What I learned
 
-### Context Immutability Design
+### 🔧 Context Immutability Design
 - There are different levels to immutability in different programming layers, to make data immutable, and the one I chose for this project was to make the Context be immutable at the class level
 This means instead of using { get; private set; } which still allows class references to be mutated because the private set only affects the the immutability at the replacement level, implementing
 an interface with only { get; } and seperating out any class references from the context class itself results in complete separation. So what it looks like is this:
@@ -212,7 +212,7 @@ public sealed class SomeContextData : ContextData, ISomeContextView
 The neat thing about this is that the implementation of the ContextView interface is integrated within the { get; private set; } definition of the concrete class. Meaning there are no extra semantic indirection
 caused by other things like protected interface implementations.
 
-### Performance Considerations for Data Throughput
+### 🔨 Performance Considerations for Data Throughput
 - Another important peice of information I gleaned is that high-throughput is important for systems that constantly send data around. Meaning using value-types even if the data is small, is not a good design descision
 based on the rate at which data is sent. The pipeline system is designed for the Unity Player Loop, meaning it can hook into Update, FixedUpdate, etc. Therefore the execution can be called every frame. This would be a
 problem with a value-type system. However using reference-types the issue of rapid copies creating many one-shot copies is avoided.
