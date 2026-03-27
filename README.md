@@ -37,7 +37,31 @@ var movePipeline = new PipelineBuilder<MoveCtx>()
 await PipelineExecutor<MoveCtx>.TryTo(movePipeline, new MoveCtx { Speed = 5f });
 ```
 
-### Example 2 — Add validation with `Add_ShortCircuit`
+### Example 2 — Add middleware functionality with `Add_Middleware`
+
+```csharp
+using EMILtools.Systems;
+
+public sealed class StaminaCtx : IContextViewImmutable
+{
+    public int Stamina;
+}
+
+var sprintPipeline = new PipelineBuilder<StaminaCtx>()
+    .Add_Middleware(ctx =>
+    {
+        // Middleware runs before validation/main method
+        UnityEngine.Debug.Log($"Preparing sprint with stamina: {ctx.Stamina}");
+    })
+    .InjectMainMethod(ctx =>
+    {
+        UnityEngine.Debug.Log("Sprint executed.");
+    });
+
+await PipelineExecutor<StaminaCtx>.TryTo(sprintPipeline, new StaminaCtx { Stamina = 20 });
+```
+
+### Example 3 — Add validation with `Add_ShortCircuit`
 If a short-circuit condition fails, the main method won’t run.
 
 ```csharp
@@ -60,7 +84,7 @@ await PipelineExecutor<AttackCtx>.TryTo(attackPipeline, new AttackCtx { HasWeapo
 await PipelineExecutor<AttackCtx>.TryTo(attackPipeline, new AttackCtx { HasWeapon = false }); // blocked
 ```
 
-### Example 3 — Add `before`, `after`, and `shortCircuited` hooks
+### Example 4 — Add `before`, `after`, and `shortCircuited` hooks
 This is great for logging, VFX/SFX, analytics, or UI feedback.
 
 ```csharp
@@ -97,7 +121,7 @@ await PipelineExecutor<CastCtx>.TryTo(castPipeline, new CastCtx { Mana = 3 });  
 ```
 
 ### Example 4 — Multi-step gameplay flow (realistic)
-This combines multiple guards and a final action.
+This combines multiple guards and a middleware with the final main execution.
 
 ```csharp
 using EMILtools.Core;
@@ -108,6 +132,7 @@ public sealed class FireCtx : IContextViewImmutable
     public bool HasAmmo;
     public bool IsReloading;
     public bool IsAlive;
+    public int Recoil;
 }
 
 var firePipeline = new PipelineBuilder<FireCtx>()
@@ -119,6 +144,12 @@ var firePipeline = new PipelineBuilder<FireCtx>()
         {
             new Callback(() => UnityEngine.Debug.Log("Click! Out of ammo."))
         })
+    .Add_Middleware(ctx =>
+    {
+        // Middleware step before main fire action
+        ctx.Recoil += 1;
+        UnityEngine.Debug.Log($"Applying recoil: {ctx.Recoil}");
+    })
     .InjectMainMethod(ctx =>
     {
         UnityEngine.Debug.Log("Bang!");
@@ -129,7 +160,8 @@ await PipelineExecutor<FireCtx>.TryTo(firePipeline, new FireCtx
 {
     HasAmmo = true,
     IsReloading = false,
-    IsAlive = true
+    IsAlive = true,
+    Recoil = 0
 });
 ```
 
