@@ -3,7 +3,9 @@ Internal middleware pipeline system with: fluent-api step composition, immutable
 
 ## 💻 Technologies Used
 
-![s](https://github.com/user-attachments/assets/78576dea-9d62-4fc3-9cda-ba150183da7c)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/78576dea-9d62-4fc3-9cda-ba150183da7c" width="100"/>
+</p>
 
 
 ## 💎 Features
