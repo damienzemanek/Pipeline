@@ -95,7 +95,7 @@ await PipelineExecutor<AttackCtx>.TryTo(attackPipeline, new AttackCtx { HasWeapo
 
 
 ### 📌 Example 4 — Add `before`, `after`, and `shortCircuited` hooks
-This is great for logging, VFX/SFX, analytics, or UI feedback.
+Add dynamic branching logic to individual steps depending on what happens. (each resolve is optional via " = null")
 
 ```csharp
 using EMILtools.Core;
