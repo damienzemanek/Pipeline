@@ -10,7 +10,7 @@ Internal middleware pipeline system with: fluent-api step composition, immutable
 
 1. Construct middleware pipelines via fluent-api builder
 2. Order and re-order pipeline steps in a modular way
-3. Type-safe, immutable context passing that acts as a snapshot avoiding mid-pipeline runtime descrprensise
+3. Type-safe, immutable context passing that acts as a snapshot avoiding mid-pipeline runtime discrepancies
 4. Short-Circuit avaliable steps that terminate pipeline execution based on custom predicates
 5. Resolver integration for each and every step: before, after, and during a potential short-circuit
 6. Resolver avaliable functionality increasing modularity and extensibility
