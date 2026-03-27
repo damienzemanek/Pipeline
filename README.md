@@ -175,6 +175,45 @@ await PipelineExecutor<FireCtx>.TryTo(firePipeline, new FireCtx
 });
 ```
 
+## 📐 My Development Process
+
+1. I was iterating on another system of mine and wanted to find a way to seperate out the transient state context from the actual blackboard I was using. So I started brainstorming using Figma
+2. I came up with an initial design alongside developing an initial integration flowchart of how it would fit in my other system
+3. I initially thought that using value-types would be a viable solution, however I quickly transitioned to reference-types when I realized how often the system sends the context around.
+If it were a value-type it would be copied by value many many times. In turn, I realized a design constraint I needed to keep in mind, that being: High throughput
+5. I then started prototyping in Unity on how the system would function independantly 
+6. After A couple iterations on the programming and updates to my diagrams I got it to a usable state.
+7. I then used Unity's Test Runner and tested my initial iteration of the Pipelines system pass using NUnit and UnityTests.
+8. After successfully passing all NUnit and UnityTests I implemented and integrated it into my other system
+9. Furthermore, In developing other systems I've updated my Pipelines system with Resolve functionality and Predicate abstraction to further SRP-out Pipelines
+
+You can take a look at my Diagram iterations [here](https://drive.google.com/drive/folders/1l6R2zXRntVr-AAUXhpVh-s5f02nbHClp?usp=sharing)
+
+
+## 💡 What I learned
+
+- There are different levels to immutability in different programming layers, to make data immutable, and the one I chose for this project was to make the Context be immutable at the class level
+This means instead of using { get; private set; } which still allows class references to be mutated because the private set only affects the the immutability at the replacement level, implementing
+an interface with only { get; } and seperating out any class references from the context class itself results in complete separation. So what it looks like is this:
+```csharp
+
+public interface ISomeContextView
+{
+    public float someFloat { get; }
+}
+
+public sealed class SomeContextData : ContextData, ISomeContextView
+{
+    public float someFloat { get; private set; } 
+}
+
+```
+The neat thing about this is that the implementation of the ContextView interface is integrated within the { get; private set; } definition of the concrete class. Meaning there are no extra semantic indirection
+caused by other things like protected interface implementations.
+
+- Another important peice of information I gleaned is that high-throughput is important for systems that constantly send data around. Meaning using value-types even if the data is small, is not a good design descision
+based on the rate at which data is sent. The pipeline system is designed for the Unity Player Loop, meaning it can hook into Update, FixedUpdate, etc. Therefore the execution can be called every frame. This would be a
+problem with a value-type system. However using reference-types the issue of rapid copies creating many one-shot copies is avoided.
 
 
 # 🔀 Flowchart
