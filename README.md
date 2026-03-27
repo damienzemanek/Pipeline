@@ -22,7 +22,7 @@ Internal middleware pipeline system with: fluent-api step composition, immutable
 
 ## 🎮 Example Usage
 
-### Example 1 — Smallest possible pipeline (just do one thing)
+### 📌 Example 1 — Smallest possible pipeline (just do one thing)
 ```csharp
 using EMILtools.Systems;
 
@@ -42,7 +42,7 @@ await PipelineExecutor<MoveCtx>.TryTo(movePipeline, new MoveCtx { Speed = 5f });
 ```
 
 
-### Example 2 — Add middleware functionality with `Add_Middleware`
+### 📌 Example 2 — Add middleware functionality with `Add_Middleware`
 
 ```csharp
 using EMILtools.Systems;
@@ -67,7 +67,7 @@ await PipelineExecutor<StaminaCtx>.TryTo(sprintPipeline, new StaminaCtx { Stamin
 ```
 
 
-### Example 3 — Add validation with `Add_ShortCircuit`
+### 📌 Example 3 — Add validation with `Add_ShortCircuit`
 If a short-circuit condition fails, the main method won’t run.
 
 ```csharp
@@ -91,7 +91,7 @@ await PipelineExecutor<AttackCtx>.TryTo(attackPipeline, new AttackCtx { HasWeapo
 ```
 
 
-### Example 4 — Add `before`, `after`, and `shortCircuited` hooks
+### 📌 Example 4 — Add `before`, `after`, and `shortCircuited` hooks
 This is great for logging, VFX/SFX, analytics, or UI feedback.
 
 ```csharp
@@ -128,7 +128,7 @@ await PipelineExecutor<CastCtx>.TryTo(castPipeline, new CastCtx { Mana = 3 });  
 ```
 
 
-### Example 5 — Multi-step gameplay flow (realistic)
+### 📌 Example 5 — Multi-step gameplay flow (realistic)
 This combines multiple guards and a middleware with the final main execution.
 
 ```csharp
@@ -175,6 +175,6 @@ await PipelineExecutor<FireCtx>.TryTo(firePipeline, new FireCtx
 
 
 
-# 📌 Flowchart
+# 🔀 Flowchart
 
 ![Pipeline Flowchart](https://github.com/user-attachments/assets/8a156396-2fd6-4606-99e0-f6d5b3301870)
